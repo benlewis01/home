@@ -1,0 +1,29 @@
+{
+    "education": [
+        {
+            "name": "Heart Of England School",
+            "logo": "https://via.placeholder.com/35",
+            "roughDate": "2021 - 2026",
+            "exactDates": "September 2021 — June 2026",
+            "description": "<strong>GCSE Results:</strong><br> Math (9)<br> Physics (9)<br> Chemistry (8)<br> English (7)<br> Geography (7)<br>"
+        }
+    ],
+    "workExperience": [
+        {
+            "name": "Williams F1 Team",
+            "logo": "https://via.placeholder.com/35",
+            "roughDate": "Summer 2025",
+            "exactDates": "1st July — 14th July 2025",
+            "description": "Shadowed aerodynamics engineers, assisted in data review processes, and learned about advanced mechanical design loops in motorsport."
+        }
+    ],
+    "achievements": [
+        {
+            "name": "F1 in Schools Competition",
+            "logo": "https://via.placeholder.com/35",
+            "roughDate": "Autumn 2025",
+            "exactDates": "October 2025",
+            "description": "Led a team of 4 to design, manufacture, and test a miniature gas-powered racing car. Won the regional award for 'Best Engineered Car'."
+        }
+    ]
+}

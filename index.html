@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="sticky-header">
+        <div class="header-content">
+            <div class="header-top-row">
+                <h1>Your Name</h1>
+                <div class="contact-info">
+                    <span>Phone: 07123 456789</span>
+                    <span class="divider">|</span>
+                    <span>Email: youremail@example.com</span>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <a href="#about" class="nav-link">About Me</a>
+                <a href="#interests" class="nav-link">Interests</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#experience" class="nav-link">Work Experience</a>
+                <a href="#achievements" class="nav-link">Achievements</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+
+        <section id="about" class="grid-section">
+            <div class="section-title-block">
+                <h2>About Me</h2>
+            </div>
+            <div class="grid-container profile-layout">
+                <div class="grid-left-media">
+                    <img src="profile.jpg" alt="Profile Photo" class="profile-photo-placeholder">
+                </div>
+                <div class="grid-right-text">
+                    <p>Write a compelling introductory summary here. Talk about who you are, what level of education or career stage you are at, and what your primary goals are.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="interests" class="grid-section">
+            <div class="section-title-block">
+                <h2>Interests</h2>
+            </div>
+            <div class="grid-container interests-layout">
+                <div class="grid-left-text">
+                    <p>Detail your hobbies and personal interests here. For example, if you are into motorsport, computing, football, or engineering.</p>
+                </div>
+                <div class="grid-right-media">
+                    <div class="interests-gallery">
+                        <img src="https://via.placeholder.com/300x200" alt="Interest Web Link" class="gallery-img">
+                        <img src="interest-local.jpg" alt="Interest Local File" class="gallery-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="accordion-section">
+            <h2>Education</h2>
+            <div id="education-container"></div>
+        </section>
+
+        <section id="experience" class="accordion-section">
+            <h2>Work Experience</h2>
+            <div id="experience-container"></div>
+        </section>
+
+        <section id="achievements" class="accordion-section">
+            <h2>Achievements</h2>
+            <div id="achievements-container"></div>
+        </section>
+
+    </div>
+
+    <script>
+        // 1. Function to handle accordion open/close animations
+        function toggleAccordion(headerElement) {
+            const item = headerElement.parentElement;
+            const content = item.querySelector('.accordion-content');
+            const icon = item.querySelector('.icon');
+            
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            } else {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = '−';
+            }
+        }
+
+        // 2. Helper function to turn data objects into HTML template blocks
+        function createAccordionHTML(item) {
+            return `
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <img src="${item.logo}" alt="Logo" class="item-logo">
+                            <span class="item-name">${item.name}</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="item-rough-date">${item.roughDate}</span>
+                            <span class="icon">+</span>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="content-inner">
+                            <p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates}</p>
+                            <p class="item-description">${item.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. Automatically fetch the info.txt data file on page load
+        fetch('info.txt')
+            .then(response => response.json())
+            .then(data => {
+                // Render Education items
+                const eduContainer = document.getElementById('education-container');
+                data.education.forEach(item => {
+                    eduContainer.innerHTML += createAccordionHTML(item);
+                });
+
+                // Render Work Experience items
+                const expContainer = document.getElementById('experience-container');
+                data.workExperience.forEach(item => {
+                    expContainer.innerHTML += createAccordionHTML(item);
+                });
+
+                // Render Achievement items
+                const achContainer = document.getElementById('achievements-container');
+                data.achievements.forEach(item => {
+                    achContainer.innerHTML += createAccordionHTML(item);
+                });
+            })
+            .catch(error => {
+                console.error("Error parsing data from info.txt:", error);
+            });
+    </script>
+
+</body>
+</html>

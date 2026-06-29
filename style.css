@@ -1,0 +1,284 @@
+/* ==========================================================================
+   1. GLOBAL & RESET SETTINGS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth; /* Enables elegant transition when clicking nav links */
+}
+
+body {
+    background-color: #fcfdfe; /* Premium architectural light grey */
+    color: #1e252b;
+    line-height: 1.75;
+    padding-top: 170px; /* Prevents content from hiding under the sticky header */
+}
+
+/* ==========================================================================
+   2. STICKY PREMIUM HEADER & NAVIGATION
+   ========================================================================== */
+.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #11161a; /* Ultra-dark luxury slate */
+    color: #ffffff;
+    padding: 25px 40px 18px 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #232d35;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Top Row Matrix: Identity Left, Contact Right */
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-top-row h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.contact-info {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+}
+
+.contact-info .divider {
+    margin: 0 12px;
+    color: #3a4754;
+}
+
+/* Centered & Evenly Spaced Section Navigation Links */
+.header-nav {
+    display: flex;
+    justify-content: center;      /* Centers the entire links group horizontally */
+    align-items: center;
+    gap: 60px;                    /* Distributes perfectly even spacing between links */
+    border-top: 1px solid #232d35;
+    padding-top: 16px;
+    width: 100%;
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    opacity: 0.8;
+    white-space: nowrap;          /* Prevents a link from breaking awkwardly into two lines */
+}
+
+.nav-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
+/* ==========================================================================
+   3. CONTENT LAYOUT FRAMEWORK
+   ========================================================================== */
+.main-wrapper {
+    max-width: 1400px; /* Wider professional layout container */
+    margin: 0 auto;
+    padding: 40px 40px 80px 40px;
+}
+
+.grid-section, .accordion-section {
+    margin-bottom: 60px;
+    /* FIX: Adds an invisible safety gap at the top when jumped to via nav links */
+    scroll-margin-top: 190px; 
+}
+
+.grid-section h2, .accordion-section h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #11161a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* Split-Column Grid Setup */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.profile-layout {
+    grid-template-columns: 350px 1fr; /* Custom constraint for photo on the left */
+}
+
+.interests-layout {
+    grid-template-columns: 1fr 500px; /* Custom constraint for gallery on the right */
+}
+
+.grid-left-text p, .grid-right-text p {
+    color: #4a5568;
+    font-size: 1.1rem;
+    text-align: justify;
+}
+/* ==========================================================================
+   4. MEDIA & IMAGE FRAMES
+   ========================================================================== */
+.profile-photo-placeholder {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    background-color: #f1f5f9;
+}
+
+.interests-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    background-color: #f1f5f9;
+}
+
+/* ==========================================================================
+   5. ACCORDION ELEMENTS (EDUCATION, EXPERIENCE, ACHIEVEMENTS)
+   ========================================================================== */
+.accordion-item {
+    background: #ffffff;
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.accordion-item:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.item-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #11161a;
+}
+
+.item-rough-date {
+    font-size: 1rem;
+    color: #718096;
+    margin-right: 30px;
+}
+
+.icon {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #718096;
+    width: 20px;
+    text-align: center;
+}
+
+/* Hidden Content Dropdown Logic */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-out;
+    background: #fafbfc;
+    border-top: 1px solid #edf2f7;
+}
+
+.content-inner {
+    padding: 24px;
+}
+
+.exact-dates {
+    font-size: 0.95rem;
+    color: #718096;
+    margin-bottom: 12px;
+}
+
+.item-description {
+    color: #2d3748;
+    font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE MEDIA QUERIES (TABLETS & MOBILE Devices)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .grid-container, .profile-layout, .interests-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .profile-photo-placeholder {
+        max-width: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 210px; /* Adds extra headroom for stacked mobile links */
+    }
+    .header-top-row {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    .header-nav {
+        justify-content: center;
+        gap: 20px;        /* Condenses gaps on tiny viewports */
+        flex-wrap: wrap;  /* Wraps elements neatly if they run out of width */
+        padding-top: 12px;
+    }
+}
