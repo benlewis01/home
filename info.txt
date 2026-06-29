@@ -1,36 +1,35 @@
-{
-    "education": [
-        {
-            "name": "Heart Of England School",
-            "logo": "https://via.placeholder.com/35",
-            "roughDate": "2021 - 2026",
-            "exactDates": "September 2021 — June 2026",
-            "description": "<strong>GCSE Results:</strong><br> Math (9)<br> Physics (9)<br> Chemistry (8)<br> English (7)<br> Geography (7)<br>"
-        }
- {
-            "name": "Heart Of England No",
-            "logo": "https://via.placeholder.com/35",
-            "roughDate": "2021 - 2026",
-            "exactDates": "September 2021 — June 2026",
-            "description": "<strong>GCSE Results:</strong><br> Math (9)<br> Physics (9)<br> Chemistry (8)<br> English (7)<br> Geography (7)<br>"
-        }
-    ],
-    "workExperience": [
-        {
-            "name": "Williams F1 Team",
-            "logo": "https://via.placeholder.com/35",
-            "roughDate": "Summer 2025",
-            "exactDates": "1st July — 14th July 2025",
-            "description": "Shadowed aerodynamics engineers, assisted in data review processes, and learned about advanced mechanical design loops in motorsport."
-        }
-    ],
-    "achievements": [
-        {
-            "name": "F1 in Schools Competition",
-            "logo": "https://via.placeholder.com/35",
-            "roughDate": "Autumn 2025",
-            "exactDates": "October 2025",
-            "description": "Led a team of 4 to design, manufacture, and test a miniature gas-powered racing car. Won the regional award for 'Best Engineered Car'."
-        }
-    ]
-}
+[ITEM]
+[SECTION] education
+[NAME] Your School, College, or University Name
+[LOGO] school-logo.png
+[ROUGHDATE] 2024 - 2026
+[EXACTDATES] September 2024 - June 2026
+[DESC] Put your education details here. You can copy and paste long paragraphs directly.
+- List your A-Levels, GCSEs, BTECs, or Degree modules.
+- Mention any specific engineering, math, or physics modules you excelled in.
+- Feel free to hit enter and write as much as you need.
+
+[ITEM]
+[SECTION] experience
+[NAME] Williams F1 Team (Placement)
+[LOGO] williams-logo.png
+[ROUGHDATE] 2025
+[EXACTDATES] July 2025 - September 2025
+[DESC] Paste your full work experience details here. 
+You can type multiple paragraphs smoothly without worrying about code breaking.
+
+Talk about what you did during your time with the team, such as:
+- Data analysis, aerodynamics, or mechanical engineering tasks.
+- Software or tools you learned to use.
+- What it was like working in a fast-paced motorsport environment.
+
+[ITEM]
+[SECTION] achievements
+[NAME] F1 in Schools Competition
+[LOGO] f1schools-logo.png
+[ROUGHDATE] 2024
+[EXACTDATES] October 2024
+[DESC] Share your achievements or extra-curricular projects here.
+- Explain your role in the team (e.g., Design Engineer, Team Principal).
+- Talk about the manufacturing process, CAD design, or racing results.
+- Mention any awards won by the team.
