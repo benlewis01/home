@@ -80,74 +80,87 @@
     </div>
 
     <script>
-        // 1. Function to handle accordion open/close animations
+        // 1. Function to handle accordion open/close animations safely
         function toggleAccordion(headerElement) {
             const item = headerElement.parentElement;
             const content = item.querySelector('.accordion-content');
             const icon = item.querySelector('.icon');
             
+            if (!content) return;
+
             if (item.classList.contains('active')) {
                 item.classList.remove('active');
                 content.style.maxHeight = null;
-                icon.textContent = '+';
+                if (icon) icon.textContent = '+';
             } else {
                 item.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
-                icon.textContent = '−';
+                if (icon) icon.textContent = '−';
             }
         }
 
-        // 2. Helper function to turn data objects into HTML template blocks
+        // 2. Helper function to safely turn data objects into HTML template blocks
         function createAccordionHTML(item) {
-            // Replace text line breaks with HTML line breaks for paragraphs/lists
-            const formattedDescription = item.description.replace(/\n/g, '<br>');
+            const descriptionText = item.description || "";
+            const formattedDescription = descriptionText.replace(/\n/g, '<br>');
+            const logoHTML = item.logo ? `<img src="${item.logo}" alt="Logo" class="item-logo" onerror="this.style.display='none'">` : '';
+
             return `
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
-                            <img src="${item.logo}" alt="Logo" class="item-logo" onerror="this.style.display='none'">
-                            <span class="item-name">${item.name}</span>
+                            ${logoHTML}
+                            <span class="item-name">${item.name || 'Untitled Entry'}</span>
                         </div>
                         <div class="header-right">
-                            <span class="item-rough-date">${item.roughDate}</span>
+                            <span class="item-rough-date">${item.roughDate || ''}</span>
                             <span class="icon">+</span>
                         </div>
                     </button>
                     <div class="accordion-content">
                         <div class="content-inner">
-                            <p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates}</p>
-                            <p class="item-description">${formattedDescription}</p>
+                            <p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates || 'N/A'}</p>
+                            <p class="item-description">${formattedDescription || 'No description provided.'}</p>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // 3. Automatically parse the custom text format from info.txt
+        // 3. Automatically parse the text file safely (Case Insensitive & Space Lenient)
         fetch('info.txt')
             .then(response => response.text())
             .then(text => {
-                // Split the file into individual items using [ITEM] as a separator
-                const rawItems = text.split('[ITEM]').filter(item => item.trim() !== '');
+                // Split using case-insensitive [ITEM] tag with optional spaces
+                const rawItems = text.split(/\[\s*item\s*\]/i).filter(item => item.trim() !== '');
 
                 rawItems.forEach(rawItem => {
-                    // Extract fields using simple tags
-                    const section = (rawItem.match(/\[SECTION\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
-                    const name = (rawItem.match(/\[NAME\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
-                    const logo = (rawItem.match(/\[LOGO\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
-                    const roughDate = (rawItem.match(/\[ROUGHDATE\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
-                    const exactDates = (rawItem.match(/\[EXACTDATES\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
-                    const description = (rawItem.match(/\[DESC\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
+                    // Ultra-safe extraction helper that ignores case and inner spaces inside brackets
+                    const extractField = (tagName) => {
+                        const searchRegex = new RegExp('\\[\\s*' + tagName + '\\s*\\]\\s*([\\s\\S]*?)(?=\\[|\\|$)', 'i');
+                        const match = rawItem.match(searchRegex);
+                        return match ? match[1].trim() : '';
+                    };
+
+                    const section = extractField('SECTION').toLowerCase();
+                    const name = extractField('NAME');
+                    const logo = extractField('LOGO');
+                    const roughDate = extractField('ROUGHDATE');
+                    const exactDates = extractField('EXACTDATES');
+                    const description = extractField('DESC');
 
                     const itemData = { name, logo, roughDate, exactDates, description };
 
-                    // Inject into the correct container based on the [SECTION] tag
-                    if (section === 'education') {
-                        document.getElementById('education-container').innerHTML += createAccordionHTML(itemData);
-                    } else if (section === 'experience') {
-                        document.getElementById('experience-container').innerHTML += createAccordionHTML(itemData);
-                    } else if (section === 'achievements') {
-                        document.getElementById('achievements-container').innerHTML += createAccordionHTML(itemData);
+                    // Inject into the correct container safely
+                    if (section.includes('education')) {
+                        const container = document.getElementById('education-container');
+                        if (container) container.innerHTML += createAccordionHTML(itemData);
+                    } else if (section.includes('experience') || section.includes('work')) {
+                        const container = document.getElementById('experience-container');
+                        if (container) container.innerHTML += createAccordionHTML(itemData);
+                    } else if (section.includes('achievement')) {
+                        const container = document.getElementById('achievements-container');
+                        if (container) container.innerHTML += createAccordionHTML(itemData);
                     }
                 });
             })
