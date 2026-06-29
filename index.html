@@ -11,7 +11,7 @@
     <header class="sticky-header">
         <div class="header-content">
             <div class="header-top-row">
-                <h1>Your Name</h1>
+                <h1>Ben Lewis</h1>
                 <div class="contact-info">
                     <span>Phone: 07123 456789</span>
                     <span class="divider">|</span>
@@ -99,11 +99,13 @@
 
         // 2. Helper function to turn data objects into HTML template blocks
         function createAccordionHTML(item) {
+            // Replace text line breaks with HTML line breaks for paragraphs/lists
+            const formattedDescription = item.description.replace(/\n/g, '<br>');
             return `
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
-                            <img src="${item.logo}" alt="Logo" class="item-logo">
+                            <img src="${item.logo}" alt="Logo" class="item-logo" onerror="this.style.display='none'">
                             <span class="item-name">${item.name}</span>
                         </div>
                         <div class="header-right">
@@ -114,37 +116,43 @@
                     <div class="accordion-content">
                         <div class="content-inner">
                             <p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates}</p>
-                            <p class="item-description">${item.description}</p>
+                            <p class="item-description">${formattedDescription}</p>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // 3. Automatically fetch the info.txt data file on page load
+        // 3. Automatically parse the custom text format from info.txt
         fetch('info.txt')
-            .then(response => response.json())
-            .then(data => {
-                // Render Education items
-                const eduContainer = document.getElementById('education-container');
-                data.education.forEach(item => {
-                    eduContainer.innerHTML += createAccordionHTML(item);
-                });
+            .then(response => response.text())
+            .then(text => {
+                // Split the file into individual items using [ITEM] as a separator
+                const rawItems = text.split('[ITEM]').filter(item => item.trim() !== '');
 
-                // Render Work Experience items
-                const expContainer = document.getElementById('experience-container');
-                data.workExperience.forEach(item => {
-                    expContainer.innerHTML += createAccordionHTML(item);
-                });
+                rawItems.forEach(rawItem => {
+                    // Extract fields using simple tags
+                    const section = (rawItem.match(/\[SECTION\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
+                    const name = (rawItem.match(/\[NAME\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
+                    const logo = (rawItem.match(/\[LOGO\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
+                    const roughDate = (rawItem.match(/\[ROUGHDATE\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
+                    const exactDates = (rawItem.match(/\[EXACTDATES\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
+                    const description = (rawItem.match(/\[DESC\]\s*([\s\S]*?)\s*(?=\[|$)/) || ["", ""])[1].trim();
 
-                // Render Achievement items
-                const achContainer = document.getElementById('achievements-container');
-                data.achievements.forEach(item => {
-                    achContainer.innerHTML += createAccordionHTML(item);
+                    const itemData = { name, logo, roughDate, exactDates, description };
+
+                    // Inject into the correct container based on the [SECTION] tag
+                    if (section === 'education') {
+                        document.getElementById('education-container').innerHTML += createAccordionHTML(itemData);
+                    } else if (section === 'experience') {
+                        document.getElementById('experience-container').innerHTML += createAccordionHTML(itemData);
+                    } else if (section === 'achievements') {
+                        document.getElementById('achievements-container').innerHTML += createAccordionHTML(itemData);
+                    }
                 });
             })
             .catch(error => {
-                console.error("Error parsing data from info.txt:", error);
+                console.error("Error reading info.txt:", error);
             });
     </script>
 
