@@ -7,6 +7,13 @@
             "exactDates": "September 2021 — June 2026",
             "description": "<strong>GCSE Results:</strong><br> Math (9)<br> Physics (9)<br> Chemistry (8)<br> English (7)<br> Geography (7)<br>"
         }
+ {
+            "name": "Heart Of England No",
+            "logo": "https://via.placeholder.com/35",
+            "roughDate": "2021 - 2026",
+            "exactDates": "September 2021 — June 2026",
+            "description": "<strong>GCSE Results:</strong><br> Math (9)<br> Physics (9)<br> Chemistry (8)<br> English (7)<br> Geography (7)<br>"
+        }
     ],
     "workExperience": [
         {
