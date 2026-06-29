@@ -10,6 +10,17 @@
 - Feel free to hit enter and write as much as you need.
 
 [ITEM]
+[SECTION] education
+[NAME] Your School, College, or University Name
+[LOGO] school-logo.png
+[ROUGHDATE] 2024 - 2026
+[EXACTDATES] September 2024 - June 2026
+[DESC] Put your education details here. You can copy and paste long paragraphs directly.
+- List your A-Levels, GCSEs, BTECs, or Degree modules.
+- Mention any specific engineering, math, or physics modules you excelled in.
+- Feel free to hit enter and write as much as you need.
+
+[ITEM]
 [SECTION] experience
 [NAME] Williams F1 Team (Placement)
 [LOGO] williams-logo.png
