@@ -127,31 +127,59 @@
             `;
         }
 
-        // 3. Automatically parse the text file safely (Case Insensitive & Space Lenient)
+        // 3. Robust parsing function
         fetch('info.txt')
             .then(response => response.text())
             .then(text => {
-                // Split using case-insensitive [ITEM] tag with optional spaces
-                const rawItems = text.split(/\[\s*item\s*\]/i).filter(item => item.trim() !== '');
+                // Split file cleanly by [ITEM]
+                const rawItems = text.split(/\[\s*item\s*\]/i);
 
                 rawItems.forEach(rawItem => {
-                    // Ultra-safe extraction helper that ignores case and inner spaces inside brackets
-                    const extractField = (tagName) => {
-                        const searchRegex = new RegExp('\\[\\s*' + tagName + '\\s*\\]\\s*([\\s\\S]*?)(?=\\[|\\|$)', 'i');
-                        const match = rawItem.match(searchRegex);
-                        return match ? match[1].trim() : '';
-                    };
+                    if (!rawItem.trim()) return;
 
-                    const section = extractField('SECTION').toLowerCase();
-                    const name = extractField('NAME');
-                    const logo = extractField('LOGO');
-                    const roughDate = extractField('ROUGHDATE');
-                    const exactDates = extractField('EXACTDATES');
-                    const description = extractField('DESC');
+                    // Initialize empty fields
+                    let section = '', name = '', logo = '', roughDate = '', exactDates = '', description = '';
+                    
+                    // Define tags to look for
+                    const tags = ['SECTION', 'NAME', 'LOGO', 'ROUGHDATE', 'EXACTDATES', 'DESC'];
+                    let currentTag = null;
+                    let descLines = [];
 
+                    // Read line by line
+                    const lines = rawItem.split(/\r?\n/);
+                    
+                    lines.forEach(line => {
+                        const trimmedLine = line.trim();
+                        let foundTag = false;
+
+                        // Check if line starts with a known tag
+                        for (let t of tags) {
+                            const matchRegex = new RegExp('^\\[\\s*' + t + '\\s*\\]', 'i');
+                            if (matchRegex.test(trimmedLine)) {
+                                currentTag = t;
+                                foundTag = true;
+                                // Grab any text right after the tag on the same line
+                                const content = line.replace(matchRegex, '').trim();
+                                if (t === 'SECTION') section = content.toLowerCase();
+                                else if (t === 'NAME') name = content;
+                                else if (t === 'LOGO') logo = content;
+                                else if (t === 'ROUGHDATE') roughDate = content;
+                                else if (t === 'EXACTDATES') exactDates = content;
+                                else if (t === 'DESC') { if (content) descLines.push(content); }
+                                break;
+                            }
+                        }
+
+                        // If it's a generic line and we are inside the DESC block, collect it
+                        if (!foundTag && currentTag === 'DESC') {
+                            descLines.push(line); // keeps spaces/tabs for formatting
+                        }
+                    });
+
+                    description = descLines.join('\n').trim();
                     const itemData = { name, logo, roughDate, exactDates, description };
 
-                    // Inject into the correct container safely
+                    // Inject to HTML safely
                     if (section.includes('education')) {
                         const container = document.getElementById('education-container');
                         if (container) container.innerHTML += createAccordionHTML(itemData);
