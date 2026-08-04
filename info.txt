@@ -43,7 +43,7 @@ Across this week i learnt many new skills from testing parts and assembling circ
 [EXACTDATES] Exact Dates TBC - September 2025
 [DESC] During the summer holidays of 2025, i did a 2day work expereince program with Southco Manufacturing in Worcester. During my time at Southco i learnt how to use multiple different modeling softwares such as NX Design (Siemens) and Solidworks. I practiced recreating parts and also designed my own parts. 
 I designed a 1:4scale F1 tyre and stand for it which was printed on a resin printer overnight. I also got a tour around the Worcester Factory where i saw many examples of production lines and manufacturing techniques such as Injection Moulding. [DESC]
-[IMAGES] s1.jpeg, s2.jpeg, s3.jpeg, s4.jpeg, s5.jpeg, s6.jpeg, s7.jpeg [IMAGES]
+[IMAGES] s1.jpeg, s2.jpeg, s3.jpeg, s4.jpeg, s5.jpeg, s6.jpeg, s7.jpeg, s8.jpeg, s9.jpeg, s0.jpeg [IMAGES]
 
 [ITEM]
 [SECTION] achievements
