@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. GLOBAL & RESPONSIVE RESET SETTINGS
+   1. GLOBAL & RESET SETTINGS
    ========================================================================== */
 * {
     margin: 0;
@@ -21,7 +21,7 @@ body {
 }
 
 /* ==========================================================================
-   2. STICKY LIQUID HEADER & NAVIGATION
+   2. STICKY LIGHTER HEADER & NAVIGATION
    ========================================================================== */
 .sticky-header {
     position: fixed;
@@ -29,11 +29,12 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: #11161a; 
-    color: #ffffff;
+    /* CHANGE: Lighter grey header background */
+    background-color: #f1f5f9; 
+    color: #1e252b;
     padding: 20px 4%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid #232d35;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .header-content {
@@ -60,12 +61,12 @@ body {
 
 .contact-info {
     font-size: 0.95rem;
-    color: #cbd5e1;
+    color: #4a5568;
 }
 
 .contact-info .divider {
     margin: 0 12px;
-    color: #3a4754;
+    color: #cbd5e1;
 }
 
 .header-nav {
@@ -73,14 +74,14 @@ body {
     justify-content: center;      
     align-items: center;
     gap: 25px; 
-    border-top: 1px solid #232d35;
+    border-top: 1px solid #e2e8f0;
     padding-top: 14px;
     width: 100%;
     flex-wrap: wrap; 
 }
 
 .nav-link {
-    color: #ffffff;
+    color: #1e252b;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -129,16 +130,20 @@ body {
     align-items: center;
 }
 
+/* Base Card Styling: Shared across static blocks and accordions */
+.profile-card, .static-info-card, .accordion-item, .reference-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    /* CHANGE: Curved/Rounded Boxes */
+    border-radius: 12px; 
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* profile-layout now acts as the profile-card container */
 .profile-layout {
     grid-template-columns: 30% 65%;
-}
-
-.interests-layout {
-    grid-template-columns: 60% 35%; /* Keeps column tighter so the F1 image box stays small */
-}
-
-.scouts-layout {
-    grid-template-columns: 45% 50%; 
+    padding: 30px;
 }
 
 .grid-left-text p, .grid-right-text p {
@@ -153,44 +158,38 @@ body {
 .profile-photo-placeholder {
     width: 100%;
     height: auto;
-    border-radius: 4px;
+    border-radius: 8px; /* Slightly smoother curves within cards */
     border: 1px solid #e2e8f0;
+    display: block;
 }
 
 /* Base styling for gallery images across sections */
 .gallery-img {
     width: 100%;
-    height: auto; /* Forces browser to use natural aspect ratio */
+    height: auto; 
     display: block;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid #e2e8f0;
-}
-
-.interests-gallery {
-    width: 100%;
 }
 
 .scouts-gallery {
     display: flex;
     gap: 12px;
     width: 100%;
-    align-items: center; /* Aligns them nicely if logos have slightly different heights */
+    align-items: center;
 }
 
 .scouts-gallery .gallery-img {
-    width: calc(50% - 6px); /* Perfect side-by-side split */
+    width: calc(50% - 6px); 
 }
 
 /* ==========================================================================
-   5. ACCORDION CONTROLS
+   5. ACCORDION CONTROLS (WITH ANIMATIONS & COLOUR STRIPES)
    ========================================================================== */
 .accordion-item {
-    background: #ffffff;
     margin-bottom: 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    /* Static default stripe, dynamically overridden by JS */
+    border-top: 4px solid #cbd5e1; 
 }
 
 .accordion-item:hover {
@@ -223,7 +222,7 @@ body {
 }
 
 .item-logo {
-    height: 28px;          
+    height: 32px;          
     width: auto;           
     max-width: 120px;      
     object-fit: contain;   
@@ -235,29 +234,38 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     color: #11161a;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
 }
 
 .item-rough-date {
     font-size: 1rem;
     color: #718096;
-    margin-right: 30px;
+    margin-right: 25px;
 }
 
-.icon {
+/* CHANGE: + to x rotation animation container */
+.icon-container {
     font-size: 1.4rem;
     font-weight: 300;
     color: #718096;
-    width: 20px;
-    text-align: center;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Smooth rotation transition */
+    transition: transform 0.25s ease-out; 
+}
+
+/* When active, rotate 45 degrees clockwise */
+.accordion-item.active .icon-container {
+    transform: rotate(45deg);
 }
 
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.25s ease-out;
+    /* Fast, dynamic height transition */
+    transition: max-height 0.25s ease-out; 
     background: #fafbfc;
     border-top: 1px solid #edf2f7;
 }
@@ -291,7 +299,7 @@ body {
     width: auto;            
     max-width: 100%;        
     object-fit: contain;    
-    border-radius: 4px;
+    border-radius: 6px;
     border: 1px solid #e2e8f0;
     background-color: #f8f9fa;
     transition: transform 0.2s ease;
@@ -312,9 +320,6 @@ body {
 }
 
 .reference-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
     padding: 24px;
 }
 
@@ -330,8 +335,6 @@ body {
     color: #718096;
     font-weight: 500;
     margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .ref-contact {
@@ -348,7 +351,7 @@ body {
    7. MOBILE & PHONE STYLING OVERRIDES (RESPONSIVE BREAKPOINTS)
    ========================================================================== */
 @media (max-width: 900px) {
-    .grid-container, .profile-layout, .interests-layout, .scouts-layout, .references-grid {
+    .grid-container, .profile-card.profile-layout, .interests-layout, .scouts-layout, .references-grid {
         grid-template-columns: 1fr;
         gap: 25px;
     }
@@ -384,7 +387,7 @@ body {
 }
 
 /* ==========================================================================
-   8. LIGHTBOX MODAL CONFIGURATION
+   8. LIGHTBOX MODAL CONFIGURATION (WITH ARROW KEY SUPPORT)
    ========================================================================== */
 .lightbox {
     position: fixed;
@@ -392,7 +395,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(17, 22, 26, 0.95); 
+    /* Dark translucent overlay */
+    background-color: rgba(17, 22, 26, 0.96); 
     z-index: 2000;
     display: flex;
     justify-content: center;
@@ -407,19 +411,21 @@ body {
     pointer-events: auto;
 }
 
+/* Ensure images don't stretch too much or overlap controls */
 .lightbox-content-wrapper {
     max-width: 85%;
-    max-height: 70%;
+    max-height: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #lightbox-img {
     max-width: 100%;
-    max-height: 65vh;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
 
 .lightbox-arrow {
@@ -427,19 +433,29 @@ body {
     background: none;
     border: none;
     color: #ffffff;
-    font-size: 3rem;
+    font-size: 3.5rem;
     cursor: pointer;
     padding: 20px;
     opacity: 0.5;
-    transition: opacity 0.15s ease;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    z-index: 2100;
 }
 
+/* CHANGE: Keyboard/Arrow Support: Highlight arrows on hover */
 .lightbox-arrow:hover {
     opacity: 1;
+    color: #4da3ff; /* Subtly indicate focusability */
 }
 
-.prev { left: 5%; }
-.next { right: 5%; }
+/* CHANGE: Visually indicate keyboard focus for accessibility */
+.lightbox-arrow:focus {
+    opacity: 1;
+    outline: 2px solid #4da3ff;
+    border-radius: 8px;
+}
+
+.prev { left: -100px; } /* Positions outside wrapper relative to screen */
+.next { right: -100px; }
 
 .lightbox-close-btn {
     position: absolute;
@@ -450,12 +466,23 @@ body {
     padding: 12px 36px;
     font-size: 0.95rem;
     font-weight: 600;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+    z-index: 2100;
 }
 
-@media (max-width: 768px) {
-    .lightbox-arrow { font-size: 2rem; }
-    .prev { left: 2%; }
+.lightbox-close-btn:hover {
+    background-color: #313c47;
+}
+
+/* Responsive adjustment for controls on smaller screens */
+@media (max-width: 1100px) {
+    .lightbox-arrow { font-size: 2.5rem; }
+    .prev { left: -60px; }
+    .next { right: -60px; }
+}
+
+@media (max-width: 800px) {
+    .prev { left: 2%; } /* Positions absolutely over image */
     .next { right: 2%; }
 }
