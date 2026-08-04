@@ -71,7 +71,7 @@ I designed a 1:4scale F1 tyre and stand for it which was printed on a resin prin
 
 [item]
 [SECTION] References
-[NAME] Stewart Beck
+[NAME] Stewart Beck NEW VERSION TEST
 [ROUGHDATE] Scout Leader
 [EXACTDATES] 2nd Balsall Common Scouts
 [DESC] Email: stewartbeck3977@hotmail.co.uk
