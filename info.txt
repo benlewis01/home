@@ -68,3 +68,17 @@ I designed a 1:4scale F1 tyre and stand for it which was printed on a resin prin
  - For my Skill i did a website design course (this website)
  - For my Volunteering i volountered with Scouts and have since continued being a young leader with them
  - My Expedition was done on the 3rd-5th April in a storm[DESC]
+
+[item]
+[SECTION] References
+[NAME] Stewart Beck
+[ROUGHDATE] Scout Leader
+[EXACTDATES] 2nd Balsall Common Scouts
+[DESC] Email: stewartbeck3977@hotmail.co.uk
+
+[item]
+[SECTION] References
+[NAME] Samuel Cozens
+[ROUGHDATE] Teacher & Tutor
+[EXACTDATES] Heart Of England School
+[DESC] Email: cozenss@heart-england.co.uk
