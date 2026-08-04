@@ -16,7 +16,6 @@ body {
     background-color: #fcfdfe; 
     color: #1e252b;
     line-height: 1.5;
-    /* REDUCED: Padding top lowered to match slimmer header */
     padding-top: 110px; 
     overflow-x: hidden; 
 }
@@ -32,7 +31,6 @@ body {
     z-index: 1000;
     background-color: #808080; 
     color: #ffffff;
-    /* REDUCED: Compact vertical padding */
     padding: 8px 4%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     border-bottom: 1px solid #6c6c6c;
@@ -43,7 +41,6 @@ body {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    /* REDUCED: Gap between title row and nav */
     gap: 6px;
 }
 
@@ -56,7 +53,6 @@ body {
 }
 
 .header-top-row h1 {
-    /* REDUCED: Slightly more compact title font */
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: -0.5px;
@@ -67,6 +63,8 @@ body {
 .contact-info {
     font-size: 0.85rem;
     color: #f1f5f9;
+    display: flex;
+    align-items: center;
 }
 
 .contact-info .divider {
@@ -80,7 +78,6 @@ body {
     align-items: center;
     gap: 20px; 
     border-top: 1px solid #a3a3a3;
-    /* REDUCED: Tightened padding so it's strictly the height of text */
     padding-top: 6px;
     padding-bottom: 2px;
     width: 100%;
@@ -96,7 +93,7 @@ body {
     transition: opacity 0.15s ease;
     opacity: 0.9;
     white-space: nowrap;          
-    line-height: 1; /* Strictly hugs text height */
+    line-height: 1;
 }
 
 .nav-link:hover {
@@ -347,7 +344,7 @@ body {
 }
 
 /* ==========================================================================
-   7. MOBILE RESPONSIVE
+   7. MOBILE RESPONSIVE FIXES
    ========================================================================== */
 @media (max-width: 900px) {
     .grid-container, .profile-card.profile-layout, .interests-layout, .scouts-layout, .references-grid {
@@ -368,12 +365,53 @@ body {
 
 @media (max-width: 600px) {
     body {
-        padding-top: 180px; 
+        padding-top: 190px; 
     }
     
     .header-top-row {
         flex-direction: column;
         text-align: center;
+        gap: 4px;
+    }
+
+    /* Stack Contact Info neatly onto two lines */
+    .contact-info {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .contact-info .divider {
+        display: none; /* Hide pipe symbol on mobile */
+    }
+
+    /* Accordion Mobile Stacking Fix */
+    .accordion-header {
+        flex-wrap: wrap;
+        padding: 14px 16px;
+    }
+
+    .header-left {
+        flex: 1 1 80%; /* Takes top row with icon */
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 6px;
+    }
+
+    .item-rough-date {
+        margin-right: 0;
+        font-size: 0.85rem;
+    }
+
+    .icon-container {
+        position: absolute;
+        right: 16px;
+    }
+
+    .accordion-item {
+        position: relative;
     }
 
     .scouts-gallery {
