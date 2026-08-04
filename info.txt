@@ -67,7 +67,7 @@ I designed a 1:4scale F1 tyre and stand for it which was printed on a resin prin
 [ITEM]
 [SECTION]experience[/SECTION]
 [NAME]Aston Martin[/NAME]
-[LOGO]https://cdn-5.motorsport.com/images/mgl/68yGpmX0/s8/logo-aston-martin.jpg[/LOGO]
+[LOGOhttps://tse3.mm.bing.net/th/id/OIP.oIO6fi_SPw9ko1UeKAqrzgHaDt?r=0&rs=1&pid=ImgDetMain&o=7&rm=3[/LOGO]
 [ROUGHDATE]September 2026[/ROUGHDATE]
 [EXACTDATES]24th - 28th September 2026[/EXACTDATES]
 [DESC]
