@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ben Lewis - Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=18">
+    <link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
 
@@ -118,7 +118,7 @@
         let currentImageIndex = 0;
         let lightboxActive = false; 
 
-        // ACCORDION TOGGLE & AUTO-SCROLL FIX
+        // ACCORDION TOGGLE & ACCURATE AUTO-SCROLL FIX
         function toggleAccordion(headerElement) {
             const currentItem = headerElement.parentElement;
             const container = currentItem.parentElement; 
@@ -143,17 +143,19 @@
                 currentItem.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
 
-                // 3. Scroll page to keep the newly opened item right below the fixed header
+                // 3. Scroll page so top of box rests cleanly BELOW the header
                 setTimeout(() => {
-                    const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                    const header = document.querySelector('.sticky-header');
+                    const headerHeight = header ? header.offsetHeight : 180;
+                    
                     const itemRect = currentItem.getBoundingClientRect();
                     const absoluteElementTop = itemRect.top + window.pageYOffset;
                     
                     window.scrollTo({
-                        top: absoluteElementTop - headerHeight - 20, // 20px padding margin
+                        top: absoluteElementTop - headerHeight - 20, // 20px padding margin below header
                         behavior: 'smooth'
                     });
-                }, 100); 
+                }, 150); 
             }
         }
 
