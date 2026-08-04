@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ben Lewis - Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=16">
+    <title> Ben Lewis - Portfolio </title>
+    <link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
             <div class="section-title-block">
                 <h2>About Me</h2>
             </div>
-            <div class="grid-container profile-layout">
+            <div class="grid-container profile-card profile-layout">
                 <div class="grid-left-media">
                     <img src="profile.jpg" alt="Ben Lewis Profile" class="profile-photo-placeholder" onerror="this.style.display='none'">
                 </div>
@@ -51,7 +51,7 @@
             <div class="section-title-block">
                 <h2>Interests</h2>
             </div>
-            <div class="grid-container interests-layout">
+            <div class="grid-container profile-card profile-layout interests-layout">
                 <div class="grid-left-text">
                     <p>My main passion is the motor industry. I love watching Formula 1 and Formula E. I follow Facebook groups and YouTube channels to try to understand the broader issues around motorsport. This has inspired me to be interested in a career in engineering, whether in the motor industry, aerospace or somewhere else. I am also intrested in technology and the advancements in digital schemes and developments.</p>
                 </div>
@@ -67,7 +67,7 @@
             <div class="section-title-block">
                 <h2>Scouts</h2>
             </div>
-            <div class="grid-container scouts-layout">
+            <div class="grid-container profile-card profile-layout scouts-layout">
                 <div class="grid-left-media">
                     <div class="scouts-gallery">
                         <img src="https://tse2.mm.bing.net/th/id/OIP.blwxfN7zecmJmsm73D9KlAHaFO?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Scouts Logo" class="gallery-img" onerror="this.style.display='none'">
@@ -105,36 +105,47 @@
     </div>
 
     <div id="lightbox-modal" class="lightbox">
-        <button class="lightbox-arrow prev" onclick="changeLightboxImage(-1)">&#10094;</button>
+        <button class="lightbox-arrow prev" onclick="changeLightboxImage(-1)" aria-label="Previous image">&#10094;</button>
         <div class="lightbox-content-wrapper">
             <img id="lightbox-img" src="" alt="Enlarged view">
         </div>
-        <button class="lightbox-arrow next" onclick="changeLightboxImage(1)">&#10095;</button>
-        <button class="lightbox-close-btn" onclick="closeLightbox()">Close</button>
+        <button class="lightbox-arrow next" onclick="changeLightboxImage(1)" aria-label="Next image">&#10095;</button>
+        <button class="lightbox-close-btn" onclick="closeLightbox()">Close (Esc)</button>
     </div>
 
     <script>
         let currentGalleryImages = [];
         let currentImageIndex = 0;
+        let lightboxActive = false; // Flag for keyboard tracking
 
+        // CHANGE: Only one expanded at a time logic
         function toggleAccordion(headerElement) {
-            const item = headerElement.parentElement;
-            const content = item.querySelector('.accordion-content');
-            const icon = item.querySelector('.icon');
+            const currentItem = headerElement.parentElement;
+            const container = currentItem.parentElement; // Container holding all items in this section
+            const content = currentItem.querySelector('.accordion-content');
             
             if (!content) return;
 
-            if (item.classList.contains('active')) {
-                item.classList.remove('active');
+            // 1. Find any currently active item in this container and close it
+            const activeItem = container.querySelector('.accordion-item.active');
+            if (activeItem && activeItem !== currentItem) {
+                activeItem.classList.remove('active');
+                activeItem.querySelector('.accordion-content').style.maxHeight = null;
+                // Resetting max-height handles the '−' back to '+' via CSS rotation
+            }
+
+            // 2. Toggle the selected item
+            if (currentItem.classList.contains('active')) {
+                currentItem.classList.remove('active');
                 content.style.maxHeight = null;
-                if (icon) icon.textContent = '+';
             } else {
-                item.classList.add('active');
+                currentItem.classList.add('active');
+                // Calculate dynamic height for transition
                 content.style.maxHeight = content.scrollHeight + "px";
-                if (icon) icon.textContent = '−';
             }
         }
 
+        // CHANGE: Dynamic dynamic color handling and dynamic + to x spin
         function createAccordionHTML(item) {
             if (!item.name || item.name.trim() === '') return '';
 
@@ -164,8 +175,13 @@
                 ? `<p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates}</p>` 
                 : '';
 
+            // Handle Dynamic Colors: Check for color, or use default gray stripe
+            // This is applied as an inline style to the .accordion-item
+            const accentColor = item.colour && item.colour.trim() !== '' ? item.colour : '#cbd5e1';
+            const dynamicStyle = `border-color: ${accentColor}; border-top-width: 5px;`;
+
             return `
-                <div class="accordion-item">
+                <div class="accordion-item" style="${dynamicStyle}">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             ${logoHTML}
@@ -173,7 +189,7 @@
                         </div>
                         <div class="header-right">
                             <span class="item-rough-date">${item.roughDate || ''}</span>
-                            <span class="icon">+</span>
+                            <div class="icon-container">+</div>
                         </div>
                     </button>
                     <div class="accordion-content">
@@ -187,6 +203,7 @@
             `;
         }
 
+        // Updated Reference Card Renderer (Name, Connection, Contact)
         function createReferenceHTML(item) {
             if (!item.name || item.name.trim() === '') return '';
 
@@ -198,29 +215,41 @@
                     <h3>${item.name}</h3>
                     <p class="ref-position">${connectionText}</p>
                     <div class="ref-contact">
-                        <span><strong>Contact:</strong> ${contactText}</span>
+                        <span>${contactText}</span>
                     </div>
                 </div>
             `;
         }
 
+        /* ==========================================================================
+           CHANGE: LIGHTBOX KEYBOARD SUPPORT
+           ========================================================================== */
         function openLightbox(index, imgArray) {
             currentGalleryImages = imgArray;
             currentImageIndex = index;
             
             document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex];
             document.getElementById('lightbox-modal').classList.add('visible');
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            lightboxActive = true; // Enable keyboard tracking
+            
+            // Focus on modal for immediate keyboard listening
+            document.getElementById('lightbox-modal').focus();
         }
 
         function closeLightbox() {
             document.getElementById('lightbox-modal').classList.remove('visible');
-            document.body.style.overflow = ''; 
+            document.body.style.overflow = ''; // Restore background scrolling
+            lightboxActive = false; // Disable keyboard tracking
         }
 
         function changeLightboxImage(direction) {
+            // Prevent function if only one image or gallery is empty
+            if (!currentGalleryImages.length || currentGalleryImages.length <= 1) return;
+
             currentImageIndex += direction;
             
+            // Handle wrapping
             if (currentImageIndex >= currentGalleryImages.length) {
                 currentImageIndex = 0;
             } else if (currentImageIndex < 0) {
@@ -230,12 +259,34 @@
             document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex];
         }
 
+        // Handle clicks outside the image to close modal
         document.getElementById('lightbox-modal').addEventListener('click', function(e) {
+            // If the user clicked the overlay (the background, not the image or buttons)
             if (e.target === this) {
                 closeLightbox();
             }
         });
 
+        // CHANGE: GLOBAL KEYDOWN LISTENER (Arrows & Esc)
+        document.addEventListener('keydown', function(e) {
+            // Only respond if the lightbox modal is visible
+            if (!lightboxActive) return;
+
+            if (e.key === 'ArrowRight' || e.key === 'Right') {
+                e.preventDefault(); // Stop default scroll
+                changeLightboxImage(1); // Next
+            } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+                e.preventDefault();
+                changeLightboxImage(-1); // Previous
+            } else if (e.key === 'Escape' || e.key === 'Esc') {
+                e.preventDefault();
+                closeLightbox(); // Close
+            }
+        });
+
+        /* ==========================================================================
+           DATA LOADING
+           ========================================================================== */
         fetch('info.txt?t=' + new Date().getTime())
             .then(response => {
                 if (!response.ok) {
@@ -250,15 +301,9 @@
                     if (!rawItem.trim()) return;
 
                     const getTagBlock = (tagName) => {
-                        // Priority 1: Check for explicit closing tag like [DESC]...[/DESC]
-                        const closedRegex = new RegExp('\\[\\s*' + tagName + '\\s*\\]([\\s\\S]*?)\\[\\/\\s*' + tagName + '\\s*\\]', 'i');
-                        const closedMatch = rawItem.match(closedRegex);
-                        if (closedMatch) return closedMatch[1].trim();
-
-                        // Priority 2: Fallback to single-line tag if no closing tag exists
-                        const singleRegex = new RegExp('\\[\\s*' + tagName + '\\s*\\]\\s*([^\\[\\n]+)', 'i');
-                        const singleMatch = rawItem.match(singleRegex);
-                        return singleMatch ? singleMatch[1].trim() : '';
+                        const regex = new RegExp('\\[\\s*' + tagName + '\\s*\\]([\\s\\S]*?)\\[\\/\\s*' + tagName + '\\s*\\]', 'i');
+                        const match = rawItem.match(regex);
+                        return match ? match[1].trim() : '';
                     };
 
                     const section = getTagBlock('SECTION').toLowerCase();
@@ -270,8 +315,10 @@
                     const description = getTagBlock('DESC'); 
                     const connection = getTagBlock('CONNECTION');
                     const contact = getTagBlock('CONTACT');
+                    // CHANGE: COLOR TAG
+                    const colour = getTagBlock('COLOUR'); 
 
-                    const itemData = { name, logo, roughDate, exactDates, images, description, connection, contact };
+                    const itemData = { name, logo, roughDate, exactDates, images, description, connection, contact, colour };
 
                     if (section.includes('education')) {
                         const container = document.getElementById('education-container');
