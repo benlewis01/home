@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Ben Lewis - Portfolio </title>
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
 
@@ -190,16 +190,15 @@
         function createReferenceHTML(item) {
             if (!item.name || item.name.trim() === '') return '';
 
-            const descriptionText = item.description || "";
-            const formattedDescription = descriptionText.replace(/\n/g, '<br>');
+            const connectionText = item.connection || item.roughDate || '';
+            const contactText = item.contact || item.description || '';
 
             return `
                 <div class="reference-card">
                     <h3>${item.name}</h3>
-                    <p class="ref-position">${item.roughDate || ''}</p>
+                    <p class="ref-position">${connectionText}</p>
                     <div class="ref-contact">
-                        <span><strong>Company/Institution:</strong> ${item.exactDates || 'N/A'}</span>
-                        <span>${formattedDescription}</span>
+                        <span>${contactText}</span>
                     </div>
                 </div>
             `;
@@ -263,8 +262,10 @@
                     const exactDates = getTagBlock('EXACTDATES');
                     const images = getTagBlock('IMAGES'); 
                     const description = getTagBlock('DESC'); 
+                    const connection = getTagBlock('CONNECTION');
+                    const contact = getTagBlock('CONTACT');
 
-                    const itemData = { name, logo, roughDate, exactDates, images, description };
+                    const itemData = { name, logo, roughDate, exactDates, images, description, connection, contact };
 
                     if (section.includes('education')) {
                         const container = document.getElementById('education-container');
