@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. GLOBAL & RESET SETTINGS
+   1. GLOBAL & RESPONSIVE RESET SETTINGS
    ========================================================================== */
 * {
     margin: 0;
@@ -9,18 +9,19 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Enables elegant transition when clicking nav links */
+    scroll-behavior: smooth; 
 }
 
 body {
-    background-color: #fcfdfe; /* Premium architectural light grey */
+    background-color: #fcfdfe; 
     color: #1e252b;
     line-height: 1.75;
-    padding-top: 170px; /* Prevents content from hiding under the sticky header */
+    padding-top: 180px; 
+    overflow-x: hidden; 
 }
 
 /* ==========================================================================
-   2. STICKY PREMIUM HEADER & NAVIGATION
+   2. STICKY LIQUID HEADER & NAVIGATION
    ========================================================================== */
 .sticky-header {
     position: fixed;
@@ -28,26 +29,27 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: #11161a; /* Ultra-dark luxury slate */
+    background-color: #11161a; 
     color: #ffffff;
-    padding: 25px 40px 18px 40px;
+    padding: 20px 4%;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid #232d35;
 }
 
 .header-content {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 15px;
 }
 
-/* Top Row Matrix: Identity Left, Contact Right */
 .header-top-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .header-top-row h1 {
@@ -66,15 +68,15 @@ body {
     color: #3a4754;
 }
 
-/* Centered & Evenly Spaced Section Navigation Links */
 .header-nav {
     display: flex;
-    justify-content: center;      /* Centers the entire links group horizontally */
+    justify-content: center;      
     align-items: center;
-    gap: 60px;                    /* Distributes perfectly even spacing between links */
+    gap: 25px; 
     border-top: 1px solid #232d35;
-    padding-top: 16px;
+    padding-top: 14px;
     width: 100%;
+    flex-wrap: wrap; 
 }
 
 .nav-link {
@@ -83,9 +85,9 @@ body {
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.5px;
-    transition: opacity 0.15s ease, color 0.15s ease;
+    transition: opacity 0.15s ease;
     opacity: 0.8;
-    white-space: nowrap;          /* Prevents a link from breaking awkwardly into two lines */
+    white-space: nowrap;          
 }
 
 .nav-link:hover {
@@ -95,18 +97,18 @@ body {
 }
 
 /* ==========================================================================
-   3. CONTENT LAYOUT FRAMEWORK
+   3. PERCENTAGE-BASED RESPONSIVE LAYOUT MATRIX
    ========================================================================== */
 .main-wrapper {
-    max-width: 1400px; /* Wider professional layout container */
+    width: 92%; 
+    max-width: 1200px; 
     margin: 0 auto;
-    padding: 40px 40px 80px 40px;
+    padding: 20px 0 80px 0;
 }
 
 .grid-section, .accordion-section {
     margin-bottom: 60px;
-    /* FIX: Adds an invisible safety gap at the top when jumped to via nav links */
-    scroll-margin-top: 190px; 
+    scroll-margin-top: 200px; 
 }
 
 .grid-section h2, .accordion-section h2 {
@@ -120,56 +122,67 @@ body {
     margin-bottom: 25px;
 }
 
-/* Split-Column Grid Setup */
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: start;
+    grid-template-columns: 1fr 1fr; 
+    gap: 5%; 
+    align-items: center;
 }
 
 .profile-layout {
-    grid-template-columns: 350px 1fr; /* Custom constraint for photo on the left */
+    grid-template-columns: 30% 65%;
 }
 
 .interests-layout {
-    grid-template-columns: 1fr 500px; /* Custom constraint for gallery on the right */
+    grid-template-columns: 60% 35%; /* Keeps column tighter so the F1 image box stays small */
+}
+
+.scouts-layout {
+    grid-template-columns: 45% 50%; 
 }
 
 .grid-left-text p, .grid-right-text p {
     color: #4a5568;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     text-align: justify;
 }
+
 /* ==========================================================================
-   4. MEDIA & IMAGE FRAMES
+   4. NATURAL ASPECT RATIO MEDIA CONTAINERS (NO STRETCH, NO CROP)
    ========================================================================== */
 .profile-photo-placeholder {
     width: 100%;
-    max-width: 320px;
     height: auto;
     border-radius: 4px;
     border: 1px solid #e2e8f0;
-    background-color: #f1f5f9;
+}
+
+/* Base styling for gallery images across sections */
+.gallery-img {
+    width: 100%;
+    height: auto; /* Forces browser to use natural aspect ratio */
+    display: block;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
 }
 
 .interests-gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    width: 100%;
 }
 
-.gallery-img {
+.scouts-gallery {
+    display: flex;
+    gap: 12px;
     width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #e2e8f0;
-    background-color: #f1f5f9;
+    align-items: center; /* Aligns them nicely if logos have slightly different heights */
+}
+
+.scouts-gallery .gallery-img {
+    width: calc(50% - 6px); /* Perfect side-by-side split */
 }
 
 /* ==========================================================================
-   5. ACCORDION ELEMENTS (EDUCATION, EXPERIENCE, ACHIEVEMENTS)
+   5. ACCORDION CONTROLS
    ========================================================================== */
 .accordion-item {
     background: #ffffff;
@@ -194,18 +207,27 @@ body {
     background: #ffffff;
     border: none;
     cursor: pointer;
-    outline: none;
 }
 
-.header-left, .header-right {
+.header-left {
     display: flex;
     align-items: center;
+    flex: 1;               
+    min-width: 0;          
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;        
 }
 
 .item-logo {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
+    height: 28px;          
+    width: auto;           
+    max-width: 120px;      
+    object-fit: contain;   
+    flex-shrink: 0;        
     margin-right: 20px;
 }
 
@@ -213,6 +235,9 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     color: #11161a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 .item-rough-date {
@@ -229,7 +254,6 @@ body {
     text-align: center;
 }
 
-/* Hidden Content Dropdown Logic */
 .accordion-content {
     max-height: 0;
     overflow: hidden;
@@ -253,32 +277,185 @@ body {
     font-size: 1.05rem;
 }
 
+.item-collage-grid {
+    display: flex;          
+    flex-wrap: wrap;        
+    gap: 12px;
+    margin-top: 20px;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 16px;
+}
+
+.collage-thumb {
+    height: 120px;          
+    width: auto;            
+    max-width: 100%;        
+    object-fit: contain;    
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8f9fa;
+    transition: transform 0.2s ease;
+    cursor: pointer;        
+}
+
+.collage-thumb:hover {
+    transform: scale(1.03);
+}
+
 /* ==========================================================================
-   6. RESPONSIVE MEDIA QUERIES (TABLETS & MOBILE Devices)
+   6. REFERENCES CARDS DISPLAY
    ========================================================================== */
-@media (max-width: 1024px) {
-    .grid-container, .profile-layout, .interests-layout {
+.references-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.reference-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 24px;
+}
+
+.reference-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #11161a;
+    margin-bottom: 4px;
+}
+
+.ref-position {
+    font-size: 0.95rem;
+    color: #718096;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ref-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 1rem;
+    color: #4a5568;
+    border-top: 1px solid #edf2f7;
+    padding-top: 14px;
+}
+
+/* ==========================================================================
+   7. MOBILE & PHONE STYLING OVERRIDES (RESPONSIVE BREAKPOINTS)
+   ========================================================================== */
+@media (max-width: 900px) {
+    .grid-container, .profile-layout, .interests-layout, .scouts-layout, .references-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 25px;
     }
+    
     .profile-photo-placeholder {
-        max-width: 240px;
+        max-width: 200px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    body {
+        padding-top: 240px; 
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     body {
-        padding-top: 210px; /* Adds extra headroom for stacked mobile links */
+        padding-top: 280px; 
     }
+    
     .header-top-row {
         flex-direction: column;
-        gap: 10px;
         text-align: center;
     }
-    .header-nav {
-        justify-content: center;
-        gap: 20px;        /* Condenses gaps on tiny viewports */
-        flex-wrap: wrap;  /* Wraps elements neatly if they run out of width */
-        padding-top: 12px;
+
+    .scouts-gallery {
+        flex-direction: column; 
     }
+    
+    .scouts-gallery .gallery-img {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   8. LIGHTBOX MODAL CONFIGURATION
+   ========================================================================== */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 22, 26, 0.95); 
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.lightbox.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-content-wrapper {
+    max-width: 85%;
+    max-height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#lightbox-img {
+    max-width: 100%;
+    max-height: 65vh;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.lightbox-arrow {
+    position: absolute;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 20px;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+}
+
+.lightbox-arrow:hover {
+    opacity: 1;
+}
+
+.prev { left: 5%; }
+.next { right: 5%; }
+
+.lightbox-close-btn {
+    position: absolute;
+    bottom: 40px;
+    background-color: #232d35;
+    border: 1px solid #3a4754;
+    color: #ffffff;
+    padding: 12px 36px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .lightbox-arrow { font-size: 2rem; }
+    .prev { left: 2%; }
+    .next { right: 2%; }
 }
