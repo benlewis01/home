@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ben Lewis - Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=20">
+    <link rel="stylesheet" href="style.css?v=22">
 </head>
 <body>
 
@@ -118,7 +118,7 @@
         let currentImageIndex = 0;
         let lightboxActive = false; 
 
-        // ACCORDION TOGGLE & ACCURATE AUTO-SCROLL BELOW THE ENTIRE HEADER + NAV
+        // ACCORDION TOGGLE & ACCURATE AUTO-SCROLL WITH VIEWPORT BUFFER
         function toggleAccordion(headerElement) {
             const currentItem = headerElement.parentElement;
             const container = currentItem.parentElement; 
@@ -143,17 +143,18 @@
                 currentItem.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
 
-                // 3. Scroll page so top of box rests cleanly BELOW the navigation bar
+                // 3. Scroll page so top of box rests cleanly BELOW header + 10% screen height buffer
                 setTimeout(() => {
                     const stickyHeader = document.querySelector('.sticky-header');
-                    // Get absolute bottom coordinate of the sticky header bar on screen
                     const headerBottomOffset = stickyHeader ? stickyHeader.getBoundingClientRect().height : 110;
                     
                     const itemRect = currentItem.getBoundingClientRect();
                     const absoluteElementTop = itemRect.top + window.pageYOffset;
                     
+                    const extraBuffer = window.innerHeight * 0.10;
+                    
                     window.scrollTo({
-                        top: absoluteElementTop - headerBottomOffset - 15, // 15px gap under nav
+                        top: absoluteElementTop - headerBottomOffset - extraBuffer,
                         behavior: 'smooth'
                     });
                 }, 150); 
@@ -201,8 +202,8 @@
                         </div>
                         <div class="header-right">
                             <span class="item-rough-date">${item.roughDate || ''}</span>
-                            <div class="icon-container">+</div>
                         </div>
+                        <div class="icon-container">+</div>
                     </button>
                     <div class="accordion-content">
                         <div class="content-inner">
