@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ben Lewis - Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
 
@@ -57,7 +57,7 @@
                 </div>
                 <div class="grid-right-media">
                     <div class="interests-gallery">
-                        <img src="https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2023/05/16151824/formula-1-formula-e-comparison-split-planetf1.jpg" alt="F1 & Formula E Cars" class="gallery-img">
+                        <img src="interests.jpg" alt="Interests Image" class="gallery-img" onerror="this.style.display='none'">
                     </div>
                 </div>
             </div>
@@ -70,8 +70,8 @@
             <div class="grid-container scouts-layout">
                 <div class="grid-left-media">
                     <div class="scouts-gallery">
-                        <img src="https://tse2.mm.bing.net/th/id/OIP.blwxfN7zecmJmsm73D9KlAHaFO?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Scouts Logo" class="gallery-img" onerror="this.style.display='none'">
-                        <img src="https://tse2.mm.bing.net/th/id/OIP.Lh9PWYsWv_d5TBEyFy_ExAHaJI?rs=1&pid=ImgDetMain&o=7&rm=3" alt="WSJ Logo" class="gallery-img" onerror="this.style.display='none'">
+                        <img src="scouts-logo.png" alt="Scouts Logo" class="gallery-img" onerror="this.style.display='none'">
+                        <img src="wsj-logo.png" alt="WSJ Logo" class="gallery-img" onerror="this.style.display='none'">
                     </div>
                 </div>
                 <div class="grid-right-text">
@@ -99,26 +99,7 @@
             <div class="section-title-block">
                 <h2>References</h2>
             </div>
-            <div class="references-grid">
-                <div class="reference-card">
-                    <h3>Stewart Beck</h3>
-                    <p class="ref-position">Scout Leader</p>
-                    <div class="ref-contact">
-                        <span><strong>Company/Institution:</strong> 2nd Balsall Common Scouts</span>
-                        <span><strong>Email:</strong> stewartbeck3977@hotmail.co.uk</span>
-                        <span><strong>Phone:</strong> N/A</span>
-                    </div>
-                </div>
-                <div class="reference-card">
-                    <h3>Samuel Cozens</h3>
-                    <p class="ref-position">Teacher & Tutor</p>
-                    <div class="ref-contact">
-                        <span><strong>Company/Institution:</strong> Heart Of England School</span>
-                        <span><strong>Email:</strong> cozenss@heart-england.co.uk</span>
-                        <span><strong>Phone:</strong> N/A</span>
-                    </div>
-                </div>
-            </div>
+            <div id="references-container" class="references-grid"></div>
         </section>
 
     </div>
@@ -155,11 +136,11 @@
         }
 
         function createAccordionHTML(item) {
-            // Strict checks: do not render elements if data is missing
+            if (!item.name || item.name.trim() === '') return '';
+
             const descriptionText = item.description || "";
             const formattedDescription = descriptionText.replace(/\n/g, '<br>');
             
-            // Only render logo HTML if a valid logo link was explicitly provided
             const logoHTML = item.logo && item.logo.trim() !== '' 
                 ? `<img src="${item.logo}" alt="Logo" class="item-logo" onerror="this.style.display='none'">` 
                 : '';
@@ -188,7 +169,7 @@
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             ${logoHTML}
-                            <span class="item-name">${item.name || 'Untitled Entry'}</span>
+                            <span class="item-name">${item.name}</span>
                         </div>
                         <div class="header-right">
                             <span class="item-rough-date">${item.roughDate || ''}</span>
@@ -201,6 +182,24 @@
                             <p class="item-description">${formattedDescription}</p>
                             ${collageHTML}
                         </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createReferenceHTML(item) {
+            if (!item.name || item.name.trim() === '') return '';
+
+            const descriptionText = item.description || "";
+            const formattedDescription = descriptionText.replace(/\n/g, '<br>');
+
+            return `
+                <div class="reference-card">
+                    <h3>${item.name}</h3>
+                    <p class="ref-position">${item.roughDate || ''}</p>
+                    <div class="ref-contact">
+                        <span><strong>Company/Institution:</strong> ${item.exactDates || 'N/A'}</span>
+                        <span>${formattedDescription}</span>
                     </div>
                 </div>
             `;
@@ -238,8 +237,7 @@
             }
         });
 
-        // Fetch data strictly from info.txt
-        fetch('info.txt')
+        fetch('info.txt?t=' + new Date().getTime())
             .then(response => {
                 if (!response.ok) {
                     throw new Error('info.txt file not found');
@@ -277,11 +275,13 @@
                     } else if (section.includes('achievement')) {
                         const container = document.getElementById('achievements-container');
                         if (container) container.innerHTML += createAccordionHTML(itemData);
+                    } else if (section.includes('reference')) {
+                        const container = document.getElementById('references-container');
+                        if (container) container.innerHTML += createReferenceHTML(itemData);
                     }
                 });
             })
             .catch(error => {
-                // Silently logs error in developer tools without putting fake data on the page
                 console.error("Could not load info.txt:", error);
             });
     </script>
