@@ -21,7 +21,7 @@ body {
 }
 
 /* ==========================================================================
-   2. STICKY LIGHTER HEADER & NAVIGATION
+   2. STICKY GREY HEADER & NAVIGATION
    ========================================================================== */
 .sticky-header {
     position: fixed;
@@ -29,12 +29,12 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    /* CHANGE: Lighter grey header background */
-    background-color: #f1f5f9; 
-    color: #1e252b;
+    /* CHANGE: Updated to #808080 grey background */
+    background-color: #808080; 
+    color: #ffffff;
     padding: 20px 4%;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid #6c6c6c;
 }
 
 .header-content {
@@ -57,11 +57,12 @@ body {
     font-size: 1.8rem;
     font-weight: 700;
     letter-spacing: -0.5px;
+    color: #ffffff;
 }
 
 .contact-info {
     font-size: 0.95rem;
-    color: #4a5568;
+    color: #f1f5f9;
 }
 
 .contact-info .divider {
@@ -74,20 +75,20 @@ body {
     justify-content: center;      
     align-items: center;
     gap: 25px; 
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid #a3a3a3;
     padding-top: 14px;
     width: 100%;
     flex-wrap: wrap; 
 }
 
 .nav-link {
-    color: #1e252b;
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.5px;
     transition: opacity 0.15s ease;
-    opacity: 0.8;
+    opacity: 0.9;
     white-space: nowrap;          
 }
 
@@ -134,13 +135,11 @@ body {
 .profile-card, .static-info-card, .accordion-item, .reference-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    /* CHANGE: Curved/Rounded Boxes */
     border-radius: 12px; 
     overflow: hidden;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* profile-layout now acts as the profile-card container */
 .profile-layout {
     grid-template-columns: 30% 65%;
     padding: 30px;
@@ -153,17 +152,16 @@ body {
 }
 
 /* ==========================================================================
-   4. NATURAL ASPECT RATIO MEDIA CONTAINERS (NO STRETCH, NO CROP)
+   4. MEDIA CONTAINERS
    ========================================================================== */
 .profile-photo-placeholder {
     width: 100%;
     height: auto;
-    border-radius: 8px; /* Slightly smoother curves within cards */
+    border-radius: 8px;
     border: 1px solid #e2e8f0;
     display: block;
 }
 
-/* Base styling for gallery images across sections */
 .gallery-img {
     width: 100%;
     height: auto; 
@@ -184,17 +182,17 @@ body {
 }
 
 /* ==========================================================================
-   5. ACCORDION CONTROLS (WITH ANIMATIONS & COLOUR STRIPES)
+   5. ACCORDION CONTROLS
    ========================================================================== */
 .accordion-item {
     margin-bottom: 16px;
-    /* Static default stripe, dynamically overridden by JS */
-    border-top: 4px solid #cbd5e1; 
+    border-top: 5px solid #cbd5e1; 
+    /* Allows smooth position recalculation during scrolling */
+    scroll-margin-top: 200px; 
 }
 
 .accordion-item:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .accordion-header {
@@ -242,7 +240,6 @@ body {
     margin-right: 25px;
 }
 
-/* CHANGE: + to x rotation animation container */
 .icon-container {
     font-size: 1.4rem;
     font-weight: 300;
@@ -252,11 +249,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Smooth rotation transition */
     transition: transform 0.25s ease-out; 
 }
 
-/* When active, rotate 45 degrees clockwise */
 .accordion-item.active .icon-container {
     transform: rotate(45deg);
 }
@@ -264,7 +259,6 @@ body {
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    /* Fast, dynamic height transition */
     transition: max-height 0.25s ease-out; 
     background: #fafbfc;
     border-top: 1px solid #edf2f7;
@@ -311,7 +305,7 @@ body {
 }
 
 /* ==========================================================================
-   6. REFERENCES CARDS DISPLAY
+   6. REFERENCES CARDS
    ========================================================================== */
 .references-grid {
     display: grid;
@@ -348,7 +342,7 @@ body {
 }
 
 /* ==========================================================================
-   7. MOBILE & PHONE STYLING OVERRIDES (RESPONSIVE BREAKPOINTS)
+   7. MOBILE RESPONSIVE
    ========================================================================== */
 @media (max-width: 900px) {
     .grid-container, .profile-card.profile-layout, .interests-layout, .scouts-layout, .references-grid {
@@ -387,7 +381,7 @@ body {
 }
 
 /* ==========================================================================
-   8. LIGHTBOX MODAL CONFIGURATION (WITH ARROW KEY SUPPORT)
+   8. LIGHTBOX MODAL CONFIGURATION
    ========================================================================== */
 .lightbox {
     position: fixed;
@@ -395,7 +389,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Dark translucent overlay */
     background-color: rgba(17, 22, 26, 0.96); 
     z-index: 2000;
     display: flex;
@@ -411,7 +404,6 @@ body {
     pointer-events: auto;
 }
 
-/* Ensure images don't stretch too much or overlap controls */
 .lightbox-content-wrapper {
     max-width: 85%;
     max-height: 75%;
@@ -441,20 +433,18 @@ body {
     z-index: 2100;
 }
 
-/* CHANGE: Keyboard/Arrow Support: Highlight arrows on hover */
 .lightbox-arrow:hover {
     opacity: 1;
-    color: #4da3ff; /* Subtly indicate focusability */
+    color: #4da3ff;
 }
 
-/* CHANGE: Visually indicate keyboard focus for accessibility */
 .lightbox-arrow:focus {
     opacity: 1;
     outline: 2px solid #4da3ff;
     border-radius: 8px;
 }
 
-.prev { left: -100px; } /* Positions outside wrapper relative to screen */
+.prev { left: -100px; } 
 .next { right: -100px; }
 
 .lightbox-close-btn {
@@ -475,7 +465,6 @@ body {
     background-color: #313c47;
 }
 
-/* Responsive adjustment for controls on smaller screens */
 @media (max-width: 1100px) {
     .lightbox-arrow { font-size: 2.5rem; }
     .prev { left: -60px; }
@@ -483,6 +472,6 @@ body {
 }
 
 @media (max-width: 800px) {
-    .prev { left: 2%; } /* Positions absolutely over image */
+    .prev { left: 2%; } 
     .next { right: 2%; }
 }
