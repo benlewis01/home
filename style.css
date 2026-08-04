@@ -15,13 +15,14 @@ html {
 body {
     background-color: #fcfdfe; 
     color: #1e252b;
-    line-height: 1.75;
-    padding-top: 180px; 
+    line-height: 1.5;
+    /* REDUCED: Padding top lowered to match slimmer header */
+    padding-top: 110px; 
     overflow-x: hidden; 
 }
 
 /* ==========================================================================
-   2. STICKY GREY HEADER & NAVIGATION
+   2. STICKY GREY HEADER & NAVIGATION (SLIMMED DOWN)
    ========================================================================== */
 .sticky-header {
     position: fixed;
@@ -29,11 +30,11 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    /* CHANGE: Updated to #808080 grey background */
     background-color: #808080; 
     color: #ffffff;
-    padding: 20px 4%;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+    /* REDUCED: Compact vertical padding */
+    padding: 8px 4%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     border-bottom: 1px solid #6c6c6c;
 }
 
@@ -42,7 +43,8 @@ body {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    /* REDUCED: Gap between title row and nav */
+    gap: 6px;
 }
 
 .header-top-row {
@@ -54,19 +56,21 @@ body {
 }
 
 .header-top-row h1 {
-    font-size: 1.8rem;
+    /* REDUCED: Slightly more compact title font */
+    font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: -0.5px;
     color: #ffffff;
+    line-height: 1.2;
 }
 
 .contact-info {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: #f1f5f9;
 }
 
 .contact-info .divider {
-    margin: 0 12px;
+    margin: 0 8px;
     color: #cbd5e1;
 }
 
@@ -74,9 +78,11 @@ body {
     display: flex;
     justify-content: center;      
     align-items: center;
-    gap: 25px; 
+    gap: 20px; 
     border-top: 1px solid #a3a3a3;
-    padding-top: 14px;
+    /* REDUCED: Tightened padding so it's strictly the height of text */
+    padding-top: 6px;
+    padding-bottom: 2px;
     width: 100%;
     flex-wrap: wrap; 
 }
@@ -84,18 +90,19 @@ body {
 .nav-link {
     color: #ffffff;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 500;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     transition: opacity 0.15s ease;
     opacity: 0.9;
     white-space: nowrap;          
+    line-height: 1; /* Strictly hugs text height */
 }
 
 .nav-link:hover {
     opacity: 1;
     text-decoration: underline;
-    text-underline-offset: 6px;
+    text-underline-offset: 4px;
 }
 
 /* ==========================================================================
@@ -105,12 +112,12 @@ body {
     width: 92%; 
     max-width: 1200px; 
     margin: 0 auto;
-    padding: 20px 0 80px 0;
+    padding: 15px 0 80px 0;
 }
 
 .grid-section, .accordion-section {
-    margin-bottom: 60px;
-    scroll-margin-top: 200px; 
+    margin-bottom: 50px;
+    scroll-margin-top: 130px; 
 }
 
 .grid-section h2, .accordion-section h2 {
@@ -120,8 +127,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-    margin-bottom: 25px;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
 }
 
 .grid-container {
@@ -131,7 +138,6 @@ body {
     align-items: center;
 }
 
-/* Base Card Styling: Shared across static blocks and accordions */
 .profile-card, .static-info-card, .accordion-item, .reference-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -142,7 +148,7 @@ body {
 
 .profile-layout {
     grid-template-columns: 30% 65%;
-    padding: 30px;
+    padding: 24px;
 }
 
 .grid-left-text p, .grid-right-text p {
@@ -185,10 +191,9 @@ body {
    5. ACCORDION CONTROLS
    ========================================================================== */
 .accordion-item {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     border-top: 5px solid #cbd5e1; 
-    /* Allows smooth position recalculation during scrolling */
-    scroll-margin-top: 200px; 
+    scroll-margin-top: 130px; 
 }
 
 .accordion-item:hover {
@@ -200,7 +205,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
+    padding: 16px 20px;
     background: #ffffff;
     border: none;
     cursor: pointer;
@@ -220,32 +225,32 @@ body {
 }
 
 .item-logo {
-    height: 32px;          
+    height: 30px;          
     width: auto;           
     max-width: 120px;      
     object-fit: contain;   
     flex-shrink: 0;        
-    margin-right: 20px;
+    margin-right: 16px;
 }
 
 .item-name {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: #11161a;
 }
 
 .item-rough-date {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #718096;
-    margin-right: 25px;
+    margin-right: 20px;
 }
 
 .icon-container {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 300;
     color: #718096;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,13 +270,13 @@ body {
 }
 
 .content-inner {
-    padding: 24px;
+    padding: 20px;
 }
 
 .exact-dates {
     font-size: 0.95rem;
     color: #718096;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .item-description {
@@ -283,13 +288,13 @@ body {
     display: flex;          
     flex-wrap: wrap;        
     gap: 12px;
-    margin-top: 20px;
+    margin-top: 16px;
     border-top: 1px dashed #e2e8f0;
-    padding-top: 16px;
+    padding-top: 14px;
 }
 
 .collage-thumb {
-    height: 120px;          
+    height: 110px;          
     width: auto;            
     max-width: 100%;        
     object-fit: contain;    
@@ -310,35 +315,35 @@ body {
 .references-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 20px;
 }
 
 .reference-card {
-    padding: 24px;
+    padding: 20px;
 }
 
 .reference-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: #11161a;
     margin-bottom: 4px;
 }
 
 .ref-position {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #718096;
     font-weight: 500;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .ref-contact {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    font-size: 1rem;
+    gap: 6px;
+    font-size: 0.95rem;
     color: #4a5568;
     border-top: 1px solid #edf2f7;
-    padding-top: 14px;
+    padding-top: 12px;
 }
 
 /* ==========================================================================
@@ -347,23 +352,23 @@ body {
 @media (max-width: 900px) {
     .grid-container, .profile-card.profile-layout, .interests-layout, .scouts-layout, .references-grid {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 20px;
     }
     
     .profile-photo-placeholder {
-        max-width: 200px;
+        max-width: 180px;
         margin: 0 auto;
         display: block;
     }
 
     body {
-        padding-top: 240px; 
+        padding-top: 150px; 
     }
 }
 
 @media (max-width: 600px) {
     body {
-        padding-top: 280px; 
+        padding-top: 180px; 
     }
     
     .header-top-row {
