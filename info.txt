@@ -15,8 +15,7 @@
 - Religious Studies ()
 - Geography ()
 
-I also was apart of the student council and prefects where i helped create a enjoyable school enviroment and help out with school activities. I also took part in 5school productions during my time at HofE.  [DESC]
-
+I also was apart of the student council and prefects where i helped create a enjoyable school enviroment and help out with school activities. I also took part in 5school productions during my time at HofE.
 
 [ITEM]
 [SECTION] experience
@@ -32,8 +31,8 @@ I also was apart of the student council and prefects where i helped create a enj
 - Computer Numerical Control (CNC)
 - Mass, Physics And Movement
 
-Across this week i learnt many new skills from testing parts and assembling circuits to 3D modeling, designing and machine handeling.[DESC]
-[IMAGES] not1.jpeg, not2.jpeg, not3.jpeg, not4.jpeg, not5.jpeg, not6.jpeg, not7.jpeg, not8.jpeg [IMAGES]
+Across this week i learnt many new skills from testing parts and assembling circuits to 3D modeling, designing and machine handeling.
+[IMAGES] not1.jpeg, not2.jpeg, not3.jpeg, not4.jpeg, not5.jpeg, not6.jpeg, not7.jpeg, not8.jpeg
 
 [ITEM]
 [SECTION] experience
@@ -42,8 +41,8 @@ Across this week i learnt many new skills from testing parts and assembling circ
 [ROUGHDATE] September 2025
 [EXACTDATES] Exact Dates TBC - September 2025
 [DESC] During the summer holidays of 2025, i did a 2day work expereince program with Southco Manufacturing in Worcester. During my time at Southco i learnt how to use multiple different modeling softwares such as NX Design (Siemens) and Solidworks. I practiced recreating parts and also designed my own parts. 
-I designed a 1:4scale F1 tyre and stand for it which was printed on a resin printer overnight. I also got a tour around the Worcester Factory where i saw many examples of production lines and manufacturing techniques such as Injection Moulding. [DESC]
-[IMAGES] s1.jpeg, s2.jpeg, s3.jpeg, s4.jpeg, s5.jpeg, s6.jpeg, s7.jpeg, s8.jpeg, s9.jpeg, s0.jpeg [IMAGES]
+I designed a 1:4scale F1 tyre and stand for it which was printed on a resin printer overnight. I also got a tour around the Worcester Factory where i saw many examples of production lines and manufacturing techniques such as Injection Moulding.
+[IMAGES] s1.jpeg, s2.jpeg, s3.jpeg, s4.jpeg, s5.jpeg, s6.jpeg, s7.jpeg, s8.jpeg, s9.jpeg, s0.jpeg
 
 [ITEM]
 [SECTION] achievements
@@ -55,9 +54,9 @@ I designed a 1:4scale F1 tyre and stand for it which was printed on a resin prin
  - For my Physical i did 6months of Climbing
  - For my Skill i did a photography course
  - For my Volunteering i volountered with Beavers
- - My Expedition was done on the 19th-20th August in wet conditions[DESC]
- 
- [ITEM]
+ - My Expedition was done on the 19th-20th August in wet conditions
+
+[ITEM]
 [SECTION] achievements
 [NAME] Silver DofE
 [LOGO] https://tse4.mm.bing.net/th/id/OIP.wJBaBhcV7BB0VNIkl4J_qwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3
@@ -67,18 +66,16 @@ I designed a 1:4scale F1 tyre and stand for it which was printed on a resin prin
  - For my Physical i did 6months of Running
  - For my Skill i did a website design course (this website)
  - For my Volunteering i volountered with Scouts and have since continued being a young leader with them
- - My Expedition was done on the 3rd-5th April in a storm[DESC]
+ - My Expedition was done on the 3rd-5th April in a storm
 
-[item]
+[ITEM]
 [SECTION] References
-[NAME] Stewart Beck NEW VERSION TEST
-[ROUGHDATE] Scout Leader
-[EXACTDATES] 2nd Balsall Common Scouts
-[DESC] Email: stewartbeck3977@hotmail.co.uk
+[NAME] Stewart Beck
+[CONNECTION] Scout Leader - 2nd Balsall Common Scouts
+[CONTACT] stewartbeck3977@hotmail.co.uk
 
-[item]
+[ITEM]
 [SECTION] References
 [NAME] Samuel Cozens
-[ROUGHDATE] Teacher & Tutor
-[EXACTDATES] Heart Of England School
-[DESC] Email: cozenss@heart-england.co.uk
+[CONNECTION] Teacher & Tutor - Heart Of England School
+[CONTACT] cozenss@heart-england.co.uk
