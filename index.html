@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ben Lewis - Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=19">
+    <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
 
@@ -118,7 +118,7 @@
         let currentImageIndex = 0;
         let lightboxActive = false; 
 
-        // ACCORDION TOGGLE & ACCURATE AUTO-SCROLL FIX
+        // ACCORDION TOGGLE & ACCURATE AUTO-SCROLL BELOW THE ENTIRE HEADER + NAV
         function toggleAccordion(headerElement) {
             const currentItem = headerElement.parentElement;
             const container = currentItem.parentElement; 
@@ -143,16 +143,17 @@
                 currentItem.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
 
-                // 3. Scroll page so top of box rests cleanly BELOW the header
+                // 3. Scroll page so top of box rests cleanly BELOW the navigation bar
                 setTimeout(() => {
-                    const header = document.querySelector('.sticky-header');
-                    const headerHeight = header ? header.offsetHeight : 180;
+                    const stickyHeader = document.querySelector('.sticky-header');
+                    // Get absolute bottom coordinate of the sticky header bar on screen
+                    const headerBottomOffset = stickyHeader ? stickyHeader.getBoundingClientRect().height : 110;
                     
                     const itemRect = currentItem.getBoundingClientRect();
                     const absoluteElementTop = itemRect.top + window.pageYOffset;
                     
                     window.scrollTo({
-                        top: absoluteElementTop - headerHeight - 20, // 20px padding margin below header
+                        top: absoluteElementTop - headerBottomOffset - 15, // 15px gap under nav
                         behavior: 'smooth'
                     });
                 }, 150); 
