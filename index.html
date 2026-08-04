@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ben Lewis - Portfolio</title>
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
             </div>
             <div class="grid-container profile-layout">
                 <div class="grid-left-media">
-                    <img src="profile.jpg" alt="Profile Photo" class="profile-photo-placeholder" style="max-width: 100%; height: auto; display: block; border-radius: 4px;">
+                    <img src="profile.jpg" alt="Ben Lewis Profile" class="profile-photo-placeholder" onerror="this.style.display='none'">
                 </div>
                 <div class="grid-right-text">
                     <p>I am an enthusiastic and diligent person and always approach everything I do with maximum effort. I am in year 12 and throughout my time at school my teachers have said that I am curious and learn quickly. I’m happy being a leader and a team player; I love to work with, and help, others and have had lots of opportunities to do this through Scouts. A key example of this is being a young leader with our Scouts troop on a Wednesday Night.</p>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="grid-right-media">
                     <div class="interests-gallery">
-                        <img src="https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2023/05/16151824/formula-1-formula-e-comparison-split-planetf1.jpg" alt="F1 & Formula E Cars" style="max-width: 100%; height: auto; max-height: 250px; display: block; border-radius: 4px;" class="gallery-img">
+                        <img src="https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2023/05/16151824/formula-1-formula-e-comparison-split-planetf1.jpg" alt="F1 & Formula E Cars" class="gallery-img">
                     </div>
                 </div>
             </div>
@@ -69,9 +69,9 @@
             </div>
             <div class="grid-container scouts-layout">
                 <div class="grid-left-media">
-                    <div class="scouts-gallery" style="display: flex; gap: 12px; width: 100%; align-items: center;">
-                        <img src="https://tse2.mm.bing.net/th/id/OIP.blwxfN7zecmJmsm73D9KlAHaFO?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Scouts Logo" style="flex: 1; max-width: 50%; height: auto; max-height: 180px; border-radius: 4px;" class="gallery-img" onerror="this.src='https://via.placeholder.com/300x200'">
-                        <img src="https://tse2.mm.bing.net/th/id/OIP.Lh9PWYsWv_d5TBEyFy_ExAHaJI?rs=1&pid=ImgDetMain&o=7&rm=3" alt="WSJ Logo" style="flex: 1; max-width: 50%; height: auto; max-height: 180px; border-radius: 4px;" class="gallery-img" onerror="this.src='https://via.placeholder.com/300x200'">
+                    <div class="scouts-gallery">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.blwxfN7zecmJmsm73D9KlAHaFO?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Scouts Logo" class="gallery-img" onerror="this.style.display='none'">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.Lh9PWYsWv_d5TBEyFy_ExAHaJI?rs=1&pid=ImgDetMain&o=7&rm=3" alt="WSJ Logo" class="gallery-img" onerror="this.style.display='none'">
                     </div>
                 </div>
                 <div class="grid-right-text">
@@ -155,9 +155,14 @@
         }
 
         function createAccordionHTML(item) {
+            // Strict checks: do not render elements if data is missing
             const descriptionText = item.description || "";
             const formattedDescription = descriptionText.replace(/\n/g, '<br>');
-            const logoHTML = item.logo ? `<img src="${item.logo}" alt="Logo" class="item-logo" onerror="this.style.display='none'">` : '';
+            
+            // Only render logo HTML if a valid logo link was explicitly provided
+            const logoHTML = item.logo && item.logo.trim() !== '' 
+                ? `<img src="${item.logo}" alt="Logo" class="item-logo" onerror="this.style.display='none'">` 
+                : '';
 
             let collageHTML = '';
             if (item.images && item.images.trim() !== '') {
@@ -168,11 +173,15 @@
                     
                     collageHTML = `<div class="item-collage-grid">`;
                     imgList.forEach((imgUrl, index) => {
-                        collageHTML += `<img src="${imgUrl}" alt="Work Gallery Image" class="collage-thumb" onclick="openLightbox(${index}, ${escapedList})" onerror="this.style.display='none'">`;
+                        collageHTML += `<img src="${imgUrl}" alt="Gallery Image" class="collage-thumb" onclick="openLightbox(${index}, ${escapedList})" onerror="this.style.display='none'">`;
                     });
                     collageHTML += `</div>`;
                 }
             }
+
+            const exactDatesHTML = item.exactDates 
+                ? `<p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates}</p>` 
+                : '';
 
             return `
                 <div class="accordion-item">
@@ -188,8 +197,8 @@
                     </button>
                     <div class="accordion-content">
                         <div class="content-inner">
-                            <p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates || 'N/A'}</p>
-                            <p class="item-description">${formattedDescription || 'No description provided.'}</p>
+                            ${exactDatesHTML}
+                            <p class="item-description">${formattedDescription}</p>
                             ${collageHTML}
                         </div>
                     </div>
@@ -229,8 +238,14 @@
             }
         });
 
+        // Fetch data strictly from info.txt
         fetch('info.txt')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('info.txt file not found');
+                }
+                return response.text();
+            })
             .then(text => {
                 const rawItems = text.split(/\[\s*item\s*\]/i);
 
@@ -266,7 +281,8 @@
                 });
             })
             .catch(error => {
-                console.error("Error reading info.txt:", error);
+                // Silently logs error in developer tools without putting fake data on the page
+                console.error("Could not load info.txt:", error);
             });
     </script>
 
