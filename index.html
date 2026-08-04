@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Ben Lewis - Portfolio </title>
-    <link rel="stylesheet" href="style.css?v=14">
+    <title>Ben Lewis - Portfolio</title>
+    <link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
 
@@ -198,7 +198,7 @@
                     <h3>${item.name}</h3>
                     <p class="ref-position">${connectionText}</p>
                     <div class="ref-contact">
-                        <span>${contactText}</span>
+                        <span><strong>Contact:</strong> ${contactText}</span>
                     </div>
                 </div>
             `;
@@ -244,15 +244,21 @@
                 return response.text();
             })
             .then(text => {
-                const rawItems = text.split(/\[\s*item\s*\]/i);
+                const rawItems = text.split(/\[\/?ITEM\]/i);
 
                 rawItems.forEach(rawItem => {
                     if (!rawItem.trim()) return;
 
                     const getTagBlock = (tagName) => {
-                        const regex = new RegExp('\\[\\s*' + tagName + '\\s*\\]\\s*([\\s\\S]*?)(?=\\[|\\|$)', 'i');
-                        const match = rawItem.match(regex);
-                        return match ? match[1].trim() : '';
+                        // Priority 1: Check for explicit closing tag like [DESC]...[/DESC]
+                        const closedRegex = new RegExp('\\[\\s*' + tagName + '\\s*\\]([\\s\\S]*?)\\[\\/\\s*' + tagName + '\\s*\\]', 'i');
+                        const closedMatch = rawItem.match(closedRegex);
+                        if (closedMatch) return closedMatch[1].trim();
+
+                        // Priority 2: Fallback to single-line tag if no closing tag exists
+                        const singleRegex = new RegExp('\\[\\s*' + tagName + '\\s*\\]\\s*([^\\[\\n]+)', 'i');
+                        const singleMatch = rawItem.match(singleRegex);
+                        return singleMatch ? singleMatch[1].trim() : '';
                     };
 
                     const section = getTagBlock('SECTION').toLowerCase();
