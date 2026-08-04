@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Ben Lewis - Portfolio </title>
-    <link rel="stylesheet" href="style.css?v=17">
+    <title>Ben Lewis - Portfolio</title>
+    <link rel="stylesheet" href="style.css?v=18">
 </head>
 <body>
 
@@ -116,36 +116,47 @@
     <script>
         let currentGalleryImages = [];
         let currentImageIndex = 0;
-        let lightboxActive = false; // Flag for keyboard tracking
+        let lightboxActive = false; 
 
-        // CHANGE: Only one expanded at a time logic
+        // ACCORDION TOGGLE & AUTO-SCROLL FIX
         function toggleAccordion(headerElement) {
             const currentItem = headerElement.parentElement;
-            const container = currentItem.parentElement; // Container holding all items in this section
+            const container = currentItem.parentElement; 
             const content = currentItem.querySelector('.accordion-content');
             
             if (!content) return;
 
-            // 1. Find any currently active item in this container and close it
+            const isOpening = !currentItem.classList.contains('active');
+
+            // 1. Close any currently active item in this container
             const activeItem = container.querySelector('.accordion-item.active');
             if (activeItem && activeItem !== currentItem) {
                 activeItem.classList.remove('active');
                 activeItem.querySelector('.accordion-content').style.maxHeight = null;
-                // Resetting max-height handles the '−' back to '+' via CSS rotation
             }
 
-            // 2. Toggle the selected item
-            if (currentItem.classList.contains('active')) {
+            // 2. Toggle current item
+            if (!isOpening) {
                 currentItem.classList.remove('active');
                 content.style.maxHeight = null;
             } else {
                 currentItem.classList.add('active');
-                // Calculate dynamic height for transition
                 content.style.maxHeight = content.scrollHeight + "px";
+
+                // 3. Scroll page to keep the newly opened item right below the fixed header
+                setTimeout(() => {
+                    const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+                    const itemRect = currentItem.getBoundingClientRect();
+                    const absoluteElementTop = itemRect.top + window.pageYOffset;
+                    
+                    window.scrollTo({
+                        top: absoluteElementTop - headerHeight - 20, // 20px padding margin
+                        behavior: 'smooth'
+                    });
+                }, 100); 
             }
         }
 
-        // CHANGE: Dynamic dynamic color handling and dynamic + to x spin
         function createAccordionHTML(item) {
             if (!item.name || item.name.trim() === '') return '';
 
@@ -175,10 +186,8 @@
                 ? `<p class="exact-dates"><strong>Exact Dates:</strong> ${item.exactDates}</p>` 
                 : '';
 
-            // Handle Dynamic Colors: Check for color, or use default gray stripe
-            // This is applied as an inline style to the .accordion-item
             const accentColor = item.colour && item.colour.trim() !== '' ? item.colour : '#cbd5e1';
-            const dynamicStyle = `border-color: ${accentColor}; border-top-width: 5px;`;
+            const dynamicStyle = `border-color: ${accentColor};`;
 
             return `
                 <div class="accordion-item" style="${dynamicStyle}">
@@ -203,7 +212,6 @@
             `;
         }
 
-        // Updated Reference Card Renderer (Name, Connection, Contact)
         function createReferenceHTML(item) {
             if (!item.name || item.name.trim() === '') return '';
 
@@ -222,7 +230,7 @@
         }
 
         /* ==========================================================================
-           CHANGE: LIGHTBOX KEYBOARD SUPPORT
+           LIGHTBOX & KEYBOARD NAV
            ========================================================================== */
         function openLightbox(index, imgArray) {
             currentGalleryImages = imgArray;
@@ -230,26 +238,23 @@
             
             document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex];
             document.getElementById('lightbox-modal').classList.add('visible');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
-            lightboxActive = true; // Enable keyboard tracking
+            document.body.style.overflow = 'hidden'; 
+            lightboxActive = true; 
             
-            // Focus on modal for immediate keyboard listening
             document.getElementById('lightbox-modal').focus();
         }
 
         function closeLightbox() {
             document.getElementById('lightbox-modal').classList.remove('visible');
-            document.body.style.overflow = ''; // Restore background scrolling
-            lightboxActive = false; // Disable keyboard tracking
+            document.body.style.overflow = ''; 
+            lightboxActive = false; 
         }
 
         function changeLightboxImage(direction) {
-            // Prevent function if only one image or gallery is empty
             if (!currentGalleryImages.length || currentGalleryImages.length <= 1) return;
 
             currentImageIndex += direction;
             
-            // Handle wrapping
             if (currentImageIndex >= currentGalleryImages.length) {
                 currentImageIndex = 0;
             } else if (currentImageIndex < 0) {
@@ -259,33 +264,29 @@
             document.getElementById('lightbox-img').src = currentGalleryImages[currentImageIndex];
         }
 
-        // Handle clicks outside the image to close modal
         document.getElementById('lightbox-modal').addEventListener('click', function(e) {
-            // If the user clicked the overlay (the background, not the image or buttons)
             if (e.target === this) {
                 closeLightbox();
             }
         });
 
-        // CHANGE: GLOBAL KEYDOWN LISTENER (Arrows & Esc)
         document.addEventListener('keydown', function(e) {
-            // Only respond if the lightbox modal is visible
             if (!lightboxActive) return;
 
             if (e.key === 'ArrowRight' || e.key === 'Right') {
-                e.preventDefault(); // Stop default scroll
-                changeLightboxImage(1); // Next
+                e.preventDefault(); 
+                changeLightboxImage(1); 
             } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
                 e.preventDefault();
-                changeLightboxImage(-1); // Previous
+                changeLightboxImage(-1); 
             } else if (e.key === 'Escape' || e.key === 'Esc') {
                 e.preventDefault();
-                closeLightbox(); // Close
+                closeLightbox(); 
             }
         });
 
         /* ==========================================================================
-           DATA LOADING
+           DATA PARSER
            ========================================================================== */
         fetch('info.txt?t=' + new Date().getTime())
             .then(response => {
@@ -315,7 +316,6 @@
                     const description = getTagBlock('DESC'); 
                     const connection = getTagBlock('CONNECTION');
                     const contact = getTagBlock('CONTACT');
-                    // CHANGE: COLOR TAG
                     const colour = getTagBlock('COLOUR'); 
 
                     const itemData = { name, logo, roughDate, exactDates, images, description, connection, contact, colour };
